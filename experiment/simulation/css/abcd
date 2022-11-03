@@ -1,0 +1,28 @@
+.ortho{
+  display: flex;
+  background:  url('../images/bgnd1.jpg') no-repeat center center fixed; 
+  height: 100vh;
+  color: #FFFFFF;
+  min-height: 500px;
+  background-size: cover;
+  background-attachment: fixed;
+  font-family: 'Ubuntu', sans-serif;
+}
+.ortho .ortho-content .left{
+  width: 45%;
+}
+.ortho .ortho-content .left .input[type=text] {
+  width: 35%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+}
+.ortho .ortho-content .right{
+  width: 55%;
+}
+.ortho .ortho-content .right .img{
+height: 400px;
+width: 400px;
+object-fit: cover;
+border-radius: 6px;
+}
