@@ -14,27 +14,77 @@ function openPart(evt, name) {
 
 var k;
 var p;
+var sigChoice;
+var scaleChoice;
+var delayChoice;
+var boxChoice;
+var yValues;
+var inValues;
 
 // ------------------------------------------ LTI Impulse Response ----------------------------------------------------------
 
-function imp(){
+function impStp(){
     var sel = document.getElementById("imp-names").value;
     sel = parseFloat(sel);
+    var sel1 = document.getElementById("sig-names").value;
+    sel1 = parseFloat(sel1);
 
     var sigValues = [];
-    for (var i=0; i<=40; i++)
+    if(sel1==1)
     {
-        if(i==20)
+        for (var i=0; i<=40; i++)
         {
-            sigValues.push(1);
+            if(i==20)
+            {
+                sigValues.push(1);
+            }
+            else
+            {
+                sigValues.push(0);
+            }
         }
-        else
+    }
+    else
+    {
+        for (var i=0; i<=40; i++)
         {
-            sigValues.push(0);
+            if(i>=20)
+            {
+                sigValues.push(1);
+            }
+            else
+            {
+                sigValues.push(0);
+            }
         }
     }
     
     if(sel==1)
+    {
+        var xValues = makeArr(-20,20,41);
+        var yValues = [];
+        for (var i=0; i<=40; i++)
+        {
+            yValues.push(sigValues[i]*10);
+        }
+    }
+    else if(sel==2)
+    {
+        var xValues = makeArr(-20,20,41);
+        var yValues = [];
+        for (var i=0; i<=40; i++)
+        {
+            if(i<10)
+            {
+                yValues.push(0);
+            }
+            else
+            {
+                yValues.push(sigValues[i-10]);
+            }
+        }
+    }
+    else if(sel==3)
     {
         var xValues = makeArr(-20,20,41);
         var yValues = [];
@@ -44,7 +94,7 @@ function imp(){
             yValues.push(sigValues[i]-sigValues[i-1]);
         }
     }
-    else if(sel==2)
+    else if(sel==4)
     {
         var xValues = makeArr(-20,20,41);
         var yValues = [];
@@ -66,16 +116,32 @@ function imp(){
 
     var config = {responsive: true}
 
-    var layout = {
-        title: 'Impulse Response',
-        showlegend: false,
-        xaxis: {
-            title: 'Time (t)'
-        },
-        yaxis: {
-            title: 'Amplitude (A)'
-        }
-    };
+    if(sel1==1)
+    {
+        var layout = {
+            title: 'Impulse Response',
+            showlegend: false,
+            xaxis: {
+                title: 'Time (t)'
+            },
+            yaxis: {
+                title: 'Amplitude (A)'
+            }
+        };
+    }
+    else
+    {
+        var layout = {
+            title: 'Step Response',
+            showlegend: false,
+            xaxis: {
+                title: 'Time (t)'
+            },
+            yaxis: {
+                title: 'Amplitude (A)'
+            }
+        };
+    }
       
     Plotly.newPlot('figure1', data, layout, config);
       var update = {
@@ -85,107 +151,43 @@ function imp(){
     Plotly.relayout('figure1', update);
 }
 
-// ------------------------------------------ LTI Step Response ----------------------------------------------------------
-
-function step(){
-    var sel = document.getElementById("imp-names1").value;
-    sel = parseFloat(sel);
-
-    var sigValues = [];
-    for (var i=0; i<=40; i++)
-    {
-        if(i>=20)
-        {
-            sigValues.push(1);
-        }
-        else
-        {
-            sigValues.push(0);
-        }
-    }
-    
-    if(sel==1)
-    {
-        var xValues = makeArr(-20,20,41);
-        var yValues = [];
-        yValues.push(sigValues[0]);
-        for (var i=1; i<=40; i++)
-        {
-            yValues.push(sigValues[i]-sigValues[i-1]);
-        }
-    }
-    else if(sel==2)
-    {
-        var xValues = makeArr(-20,20,41);
-        var yValues = [];
-        yValues.push(sigValues[0]);
-        for (var i=1; i<=40; i++)
-        {
-            yValues.push(sigValues[i]+yValues[i-1]);
-        }
-    }
-
-    var trace1 = {
-        x: xValues,
-        y: yValues,
-        type: 'scatter',
-        mode: 'markers'
-    };
-      
-    var data = [trace1];
-
-    var config = {responsive: true}
-
-    var layout = {
-        title: 'Step Response',
-        showlegend: false,
-        xaxis: {
-            title: 'Time (t)'
-        },
-        yaxis: {
-            title: 'Amplitude (A)'
-        }
-    };
-      
-    Plotly.newPlot('figure2', data, layout, config);
-      var update = {
-        width: 500,
-        height: 400
-    };
-    Plotly.relayout('figure2', update);
-}
-
 // ------------------------------------------ LTI System Functions ----------------------------------------------------------
 
 function syst(){
-    var sel1 = document.getElementById("sig-names2").value;
-    sel = parseFloat(sel);
     var sel = document.getElementById("imp-names2").value;
+    sel = parseFloat(sel);
+    var sel1 = document.getElementById("sig-names2").value;
     sel1 = parseFloat(sel1);
     am = 1;
     freq = 0.3;
     var sigValues = [];
+    var sigValues1 = [];
     var yValues = [];
 
     if(sel==1)
     {
         var xValues = makeArr(-20,20,41);
+        var xValues1 = makeArr(-10,30,41);
         for (var i=0; i<=40; i++)
         {
             sigValues.push(am*Math.sin(freq*xValues[i]));
+            sigValues1.push(am*Math.sin(freq*xValues1[i]));
         }
     }
     else if(sel==2)
     {
         var xValues = makeArr(-20,20,41);
+        var xValues1 = makeArr(-10,30,41);
         for (var i=0; i<=40; i++)
         {
             sigValues.push(am*Math.cos(freq*xValues[i]));
+            sigValues1.push(am*Math.cos(freq*xValues1[i]));
         }
     }
     else if(sel==3)
     {
         var xValues = makeArr(-20,20,41);
+        var xValues1 = makeArr(-10,30,41);
         for (var i=0; i<=40; i++)
         {
             if(xValues[i]<0)
@@ -196,11 +198,20 @@ function syst(){
             {
                 sigValues.push(am*xValues[i]);
             }
+            if(xValues1[i]<0)
+            {
+                sigValues1.push(0);
+            }
+            else
+            {
+                sigValues1.push(am*xValues1[i]);
+            }
         }
     }
     else if(sel==4)
     {
         var xValues = makeArr(-20,20,41);
+        var xValues1 = makeArr(-10,30,41);
         for (var i=0; i<=40; i++)
         {
             if(i<13)
@@ -215,11 +226,25 @@ function syst(){
             {
                 sigValues.push(0);
             }
+            if(i<23)
+            {
+                sigValues1.push(0);
+            }
+            else if(i<36)
+            {
+                sigValues1.push(am);
+            }
+            else
+            {
+                sigValues1.push(0);
+            }
         }
     }
     else
     {
         var xValues = makeArr(-20,20,41);
+        var xValues1 = makeArr(-10,30,41);
+        freq = 2;
         for (var i=0; i<=40; i++)
         {
             if(i<parseFloat(20/freq))
@@ -234,19 +259,46 @@ function syst(){
             {
                 sigValues.push(0);
             }
+            if(i<parseFloat(30/freq))
+            {
+                sigValues1.push(am);
+            }
+            else if(i<parseFloat(50/freq))
+            {
+                sigValues1.push(-am);
+            }
+            else
+            {
+                sigValues1.push(0);
+            }
         }
     }
     
     if(sel1==1)
     {
         var yValues = [];
-        yValues.push(sigValues[0]);
-        for (var i=1; i<=40; i++)
+        for (var i=0; i<=40; i++)
         {
-            yValues.push((sigValues[i]-sigValues[i-1]));
+            yValues.push(sigValues[i]*10);
         }
     }
     else if(sel1==2)
+    {
+        var yValues = [];
+        for (var i=0; i<=40; i++)
+        {
+            yValues.push(sigValues1[i]);
+        }
+    }
+    else if(sel1==3)
+    {
+        var yValues = [];
+        for (var i=0; i<=40; i++)
+        {
+            yValues.push(sigValues[i]-sigValues[i-1]);
+        }
+    }
+    else
     {
         var yValues = [];
         yValues.push(sigValues[0]);
@@ -261,7 +313,7 @@ function syst(){
         y: yValues,
         type: 'scatter',
         name: 'output',
-        mode: 'markers'
+        mode: 'line'
     };
 
     var trace2 = {
@@ -277,7 +329,7 @@ function syst(){
     var config = {responsive: true}
 
     var layout = {
-        title: 'Step Response',
+        title: 'LTI System Output',
         xaxis: {
             title: 'Time (t)'
         },
@@ -292,6 +344,173 @@ function syst(){
         height: 400
     };
     Plotly.relayout('figure3', update);
+}
+
+// ------------------------------------------ Moving Average ----------------------------------------------------------
+
+function mavg(){
+    var sel = document.getElementById("imp-names3").value;
+    sel = parseFloat(sel);
+    var sel1 = document.getElementById("sig-names6").value;
+    sel1 = parseFloat(sel1);
+    var std = document.getElementById("noise").value;
+    std = parseFloat(std);
+    var wind = document.getElementById("filter").value;
+    wind = parseFloat(wind);
+    if(wind>80)
+    {
+        wind = 80;
+    }
+    if(wind<2)
+    {
+        wind = 2;
+    }
+    am = 1;
+    freq = 0.5;
+    var sigValues = [];
+    var yValues = [];
+
+    if(sel==1)
+    {
+        var xValues = makeArr(-40,40,81);
+        for (var i=0; i<=80; i++)
+        {
+            sigValues.push(am*Math.sin(freq*xValues[i]));
+        }
+    }
+    else if(sel==2)
+    {
+        var xValues = makeArr(-40,40,81);
+        for (var i=0; i<=80; i++)
+        {
+            sigValues.push(am*Math.cos(freq*xValues[i]));
+        }
+    }
+    else if(sel==3)
+    {
+        var xValues = makeArr(-40,40,81);
+        for (var i=0; i<=80; i++)
+        {
+            if(xValues[i]<0)
+            {
+                sigValues.push(0);
+            }
+            else
+            {
+                sigValues.push(am*xValues[i]);
+            }
+        }
+    }
+    else if(sel==4)
+    {
+        var xValues = makeArr(-40,40,81);
+        for (var i=0; i<=80; i++)
+        {
+            if(i<27)
+            {
+                sigValues.push(0);
+            }
+            else if(i<54)
+            {
+                sigValues.push(am);
+            }
+            else
+            {
+                sigValues.push(0);
+            }
+        }
+    }
+    else
+    {
+        var xValues = makeArr(-40,40,81);
+        for (var i=0; i<=80; i++)
+        {
+            if(i<parseFloat(40/freq))
+            {
+                sigValues.push(am);
+            }
+            else if(i<parseFloat(80/freq))
+            {
+                sigValues.push(-am);
+            }
+            else
+            {
+                sigValues.push(0);
+            }
+        }
+    }
+
+    for (var i=0; i<=80; i++)
+    {
+        sigValues[i] = sigValues[i]+std*Math.random();
+        yValues.push(sigValues[i]);
+    }
+
+    if(wind%2)
+    {
+        var start = (wind-1)/2;
+        var last = 81-((wind-1)/2);
+        for(var i=start; i<last; i++)
+        {
+            var sum = 0;
+            for(var j=i-(wind-1)/2; j<i+(wind-1)/2; j++)
+            {
+                sum = sum+sigValues[j];
+            }
+            yValues[i] = sum/wind;
+        }
+    }
+    else
+    {
+        var start = (wind)/2;
+        var last = 81-((wind)/2);
+        for(var i=start; i<last; i++)
+        {
+            var sum = 0;
+            for(var j=i-(wind)/2; j<i+(wind)/2; j++)
+            {
+                sum = sum+sigValues[j];
+            }
+            yValues[i] = sum/wind;
+        }
+    }
+
+    var trace1 = {
+        x: xValues,
+        y: yValues,
+        type: 'scatter',
+        name: 'filtered',
+        mode: 'line'
+    };
+
+    var trace2 = {
+        x: xValues,
+        y: sigValues,
+        type: 'scatter',
+        name: 'original',
+        mode: 'line'
+    };
+      
+    var data = [trace1,trace2];
+
+    var config = {responsive: true}
+
+    var layout = {
+        title: 'Moving Average Filter',
+        xaxis: {
+            title: 'Time (t)'
+        },
+        yaxis: {
+            title: 'Amplitude (A)'
+        }
+    };
+      
+    Plotly.newPlot('figure11', data, layout, config);
+      var update = {
+        width: 500,
+        height: 400
+    };
+    Plotly.relayout('figure11', update);
 }
 
 // ------------------------------------------ Black Box1 ----------------------------------------------------------
@@ -436,11 +655,17 @@ function blackCheck(){
 
     if(freq!=0.5 || am!=k || sh!=p)
     {
-        window.alert("Wrong Answer! Check Plot for help!");
+        var element = document.getElementById("result1")
+        element.style.color = "#FF0000";
+        element.style.fontWeight = "bold";
+        element.innerHTML = 'Wrong Answer! Check Plot for your signal!';
     }
     else
     {
-        window.alert("Right Answer!");
+        var element = document.getElementById("result1")
+        element.style.color = "#006400";
+        element.style.fontWeight = "bold";
+        element.innerHTML = 'Right Answer!';
     }
 
     var xValues = makeArr(-20,20,41);
@@ -504,7 +729,6 @@ function black1(){
     var sigValues1 = [];
     var sigValues2 = [];
     var yValues = [];
-    var yValues2 = [];
 
     k1 = 5;
     p1 = -10;
@@ -660,7 +884,10 @@ function blackCheck1(){
 
     if(am4>5 || am4<2 || am3>5 || am3<2 || am2>5 || am2<2 || am1>5 || am1<2 || sh4>12 || sh4<-12 || sh3>12 || sh3<-12 || sh2>12 || sh2<-12 || sh1>12 || sh1<-12)
     {
-        window.alert("Wrong Answer! Retry!");
+        var element = document.getElementById("result2")
+        element.style.color = "#FF0000";
+        element.style.fontWeight = "bold";
+        element.innerHTML = 'Wrong Answer! Check Plot for your signal!';
     }
     else
     {
@@ -713,54 +940,188 @@ function blackCheck1(){
         }
         if(flag)
         {
-            window.alert("Wrong Answer! Retry");
+            var element = document.getElementById("result2")
+            element.style.color = "#FF0000";
+            element.style.fontWeight = "bold";
+            element.innerHTML = 'Wrong Answer! Check Plot for your signal!';
         }
         else
         {
-            window.alert("Right Answer!");
+            var element = document.getElementById("result2")
+            element.style.color = "#006400";
+            element.style.fontWeight = "bold";
+            element.innerHTML = 'Right Answer!';
         }
     }
 }
 
 // ------------------------------------------ Blocks init ----------------------------------------------------------
 
-function blocks(){
-    var yValues = [];
+function defFunction(choice, signal){
 
-    k1 = 5;
-    p1 = -10;
-    k2 = 2;
-    p2 = 10;
-
-    var xValues = makeArr(-20,20,41);
-    for (var i=0; i<=40; i++)
+    var out = [];
+    if(choice==0)
     {
-        if(xValues[i]==p1)
+        // difference
+        out.push(signal[i]);
+        for (var i=1; i<=80; i++)
         {
-            yValues.push(k1);
+            out.push(signal[i]-signal[i-1]);
         }
-        else if(xValues[i]==p2)
+    }
+    else if(choice==1)
+    {
+        out.push(signal[0]);
+        for (var i=1; i<=80; i++)
         {
-            yValues.push(k2);
+            out.push(signal[i]+out[i-1]);
+        }
+    }
+    else if(choice==2)
+    {
+        var wind = 5;
+        var start = (wind-1)/2;
+        var last = 81-((wind-1)/2);
+        for(var i=0; i<81; i++)
+        {
+            out.push(signal[i]);
+        }
+        for(var i=start; i<last; i++)
+        {
+            var sum = 0;
+            for(var j=i-(wind-1)/2; j<i+(wind-1)/2; j++)
+            {
+                sum = sum+signal[j];
+            }
+            out[i] = sum/wind;
+        }
+    }
+    else
+    {
+        out = signal;
+    }
+
+    return out;
+}
+
+function blocks(){
+    yValues = [];
+    inValues = [];
+
+    sigChoice = Math.floor(Math.random()*2);
+    scaleChoice = Math.floor(Math.random()*41)-20;
+    delayChoice = Math.floor(Math.random()*41)-20;
+    boxChoice = Math.floor(Math.random()*4);
+
+    console.log(scaleChoice,delayChoice,boxChoice);
+
+    var xValues = makeArr(-40,40,81);
+    var xBig = makeArr(-60,60,121);
+    var xValues1 = makeArr(-40+delayChoice,40+delayChoice,81);
+
+    if(sigChoice==0)
+    {
+        for(var i=0; i<=80; i++)
+        {
+            if(i<27)
+            {
+                inValues.push(0);
+            }
+            else if(i<54)
+            {
+                inValues.push(1);
+            }
+            else
+            {
+                inValues.push(0);
+            }
+        }
+            for(var i=0; i<=80; i++)
+            {
+                if(i<27+delayChoice)
+                {
+                    yValues.push(0);
+                }
+                else if(i<54+delayChoice)
+                {
+                    yValues.push(scaleChoice);
+                }
+                else
+                {
+                    yValues.push(0);
+                }
+            }
+    }
+    else
+    {
+        for(var i=0; i<=80; i++)
+        {
+            inValues.push(Math.sin(0.5*Math.PI*xValues[i]));
+        }
+        if(delayChoice<0)
+        {
+            for(var i=-delayChoice; i<=80; i++)
+            {
+                yValues.push(inValues[i]*scaleChoice);
+            }
+            var index1 = 0;
+            var index2 = 0;
+            for(var i=0; i<121; i++)
+            {
+                if(xBig[i]==40)
+                {
+                    index1 = i;
+                }
+                if(xBig[i]==40-delayChoice)
+                {
+                    index2 = i;
+                }
+            }
+            for(var i=index1+1; i<=index2; i++)
+            {
+                yValues.push(scaleChoice*Math.sin(0.5*Math.PI*xBig[i]));
+            }
         }
         else
         {
-            yValues.push(0);
+            var index1 = 0;
+            var index2 = 0;
+            for(var i=0; i<121; i++)
+            {
+                if(xBig[i]==-40)
+                {
+                    index1 = i;
+                }
+                if(xBig[i]==-40-delayChoice)
+                {
+                    index2 = i;
+                }
+            }
+            for(var i=index2; i<index1; i++)
+            {
+                yValues.push(scaleChoice*Math.sin(0.5*Math.PI*xBig[i]));
+            }
+            for(var i=0; i<80-delayChoice; i++)
+            {
+                yValues.push(inValues[i]*scaleChoice);
+            }
         }
     }
 
-    var trace2 = {
+    yFinal = defFunction(boxChoice,yValues);
+
+    var trace1 = {
         x: xValues,
-        y: yValues,
+        y: inValues,
         type: 'scatter',
         name: 'original',
-        mode: 'markers'
+        mode: 'lines'
     };
-    var data2 = [trace2];
+    var data1 = [trace1];
 
     var config = {responsive: true}
 
-    var layout2 = {
+    var layout1 = {
         title: 'Input Signal',
         xaxis: {
             title: 'Time (t)'
@@ -770,272 +1131,401 @@ function blocks(){
         }
     };
 
-    Plotly.newPlot('figure11', data2, layout2, config);
+    var trace2 = {
+        x: xValues1,
+        y: yFinal,
+        type: 'scatter',
+        name: 'original',
+        mode: 'lines'
+    };
+    var data2 = [trace2];
+
+    var layout2 = {
+        title: 'Output Signal',
+        xaxis: {
+            title: 'Time (t)'
+        },
+        yaxis: {
+            title: 'Amplitude (A)'
+        }
+    };
+
+    Plotly.newPlot('figure12', data1, layout1, config);
       var update = {
         width: 400,
         height: 300
     };
-    Plotly.relayout('figure11', update);
+    Plotly.relayout('figure12', update);
+    Plotly.newPlot('figure13', data2, layout2, config);
+      var update = {
+        width: 400,
+        height: 300
+    };
+    Plotly.relayout('figure13', update);
+    Plotly.newPlot('figure14', data1, layout1, config);
+    var update = {
+      width: 400,
+      height: 300
+  };
+  Plotly.relayout('figure14', update);
 }
 
-/*
-// ------------------------------------------ Fourier Basis ----------------------------------------------------------
+/* ---------------------------------- Blocks Checking ----------------------------------- */
 
-function four(){
-	N = document.getElementById("N1").value
-	k11 = document.getElementById("k1").value
-	k22 = document.getElementById("k2").value
-    
-    N = parseFloat(N);
-    k11 = parseFloat(k11);
-    k22 = parseFloat(k22);
+function blockCheck(){
+    var yValues = [];
+    var inValues = [];
 
-    if(N<2)
+    var b1 = document.getElementById("sig-namesBLK1").value;
+    b1 = parseInt(b1);
+    var b2 = document.getElementById("sig-namesBLK2").value;
+    b2 = parseInt(b2);
+    var b3 = document.getElementById("sig-namesBLK3").value;
+    b3 = parseInt(b3);
+    var v1 = document.getElementById("block1").value;
+    v1 = parseInt(v1);
+    var v2 = document.getElementById("block2").value;
+    v2 = parseInt(v2);
+    var v3 = document.getElementById("block3").value;
+    v3 = parseInt(v3);
+
+    var spl = [];
+    if(b1>2 && b1!=6)
     {
-        N = 2;
+        spl.push(1);
     }
-    
-    if(k11 > N-1)
+    else
     {
-        k11 = N-1;
+        spl.push(0);
     }
-    
-    if(k22 > N-1)
+    if(b2>2 && b2!=6)
     {
-        k22 = N-1;
+        spl.push(1);
     }
-    
-    var xValues = makeArr(-2,2,1000);
-
-    yValuesFinalReal = [];
-    yValuesFinalImag = [];
-    for(var i=0; i<1000; i++)
+    else
     {
-        yValuesFinalReal.push(am*am*(Math.cos(2*Math.PI*k11*xValues[i]/N))*(Math.cos(2*Math.PI*k22*xValues[i]/N)) - am*am*(Math.sin(2*Math.PI*k11*xValues[i]/N))*(Math.sin(2*Math.PI*k22*xValues[i]/N)));
-        yValuesFinalImag.push(am*am*(Math.cos(2*Math.PI*k11*xValues[i]/N))*(Math.sin(2*Math.PI*k22*xValues[i]/N)) + am*am*(Math.sin(2*Math.PI*k11*xValues[i]/N))*(Math.cos(2*Math.PI*k22*xValues[i]/N)));
+        spl.push(0);
     }
-    
-    yValuesPosReal = [];
-    yValuesNegReal = [];
-    yValuesPosImag = [];
-    yValuesNegImag = [];
-
-    for(var i=0; i<1000; i++)
+    if(b3>2 && b3!=6)
     {
-        if(yValuesFinalReal[i]<0)
-        {
-            yValuesPosReal.push(yValuesFinalReal[i]);
-            yValuesNegReal.push(0);
-        }
-        else
-        {
-            yValuesNegReal.push(yValuesFinalReal[i]);
-            yValuesPosReal.push(0);
-        }
+        spl.push(1);
+    }
+    else
+    {
+        spl.push(0);
+    }
 
-        if(yValuesFinalImag[i]<0)
+    var count = 0;
+    for(var i=0; i<3; i++)
+    {
+        if(spl[i])
         {
-            yValuesPosImag.push(yValuesFinalImag[i]);
-            yValuesNegImag.push(0);
-        }
-        else
-        {
-            yValuesNegImag.push(yValuesFinalImag[i]);
-            yValuesPosImag.push(0);
+            count++;
         }
     }
 
-    var trace1 = {
-        x: xValues,
-        y: yValuesPosReal,
-        type: 'scatter',
-        fill: 'tonexty'
-    };
+    var scaleHere = 1;
+    var delayHere = 0;
 
-    var trace2 = {
-        x: xValues,
-        y: yValuesNegReal,
-        type: 'scatter',
-        fill: 'tozeroy'
-    };
-
-    var trace3 = {
-        x: xValues,
-        y: yValuesNegImag,
-        xaxis: 'x2',
-        yaxis: 'y2',
-        type: 'scatter',
-        fill: 'tonexty'
-    };
-
-    var trace4 = {
-        x: xValues,
-        y: yValuesPosImag,
-        xaxis: 'x2',
-        yaxis: 'y2',
-        type: 'scatter',
-        fill: 'tozeroy'
-    };
-      
-    var data = [trace1, trace2, trace3, trace4];
-
-    var config = {responsive: true}
-
-    var layout = {
-        title: 'Orthogonality of Fourier Basis functions',
-        showlegend: false,
-        grid: {rows: 1, columns: 2, pattern: 'independent'},
-        xaxis: {
-            title: 'Time (t)'
-        },
-        yaxis: {
-            title: 'Amplitude (A)'
-        },
-        xaxis2: {
-            title: 'Time (t)'
-        },
-        yaxis2: {
-            title: 'Amplitude (A)'
-        },
-        annotations: [{
-            text: "Real Part",
-            font: {
-                size: 16,
-            },
-            showarrow: false,
-            align: 'center',
-            x: 0,
-            y: am+0.1,
-            xref: 'x',
-            yref: 'y',
-        },
-        {
-            text: "Imaginery",
-            font: {
-              size: 16,
-            },
-            showarrow: false,
-            align: 'center',
-            x: 0,
-            y: am+0.1,
-            xref: 'x2',
-            yref: 'y2',
-        }]
-    };
-      
-    Plotly.newPlot('figure3', data, layout, config);
-      var update = {
-        width: 500,
-        height: 400
-    };
-    Plotly.relayout('figure3', update);
-
-    if(k11==k22)
+    if(b1==1)
     {
-        document.getElementById("in2").innerHTML = 1.0;
+        scaleHere = scaleHere*v1;
+    }
+    else if(b1==2)
+    {
+        delayHere = delayHere+v1;
+    }
+    if(b2==1)
+    {
+        scaleHere = scaleHere*v2;
+    }
+    else if(b2==2)
+    {
+        delayHere = delayHere+v2;
+    }
+    if(b3==1)
+    {
+        scaleHere = scaleHere*v3;
+    }
+    else if(b3==2)
+    {
+        delayHere = delayHere+v3;
+    }
+
+    if(delayHere>20 || delayHere<-20)
+    {
+        var element = document.getElementById("resultBLK")
+        element.style.color = "#FF0000";
+        element.style.fontWeight = "bold";
+        element.innerHTML = 'Too much delay given! Retry!';
         return;
     }
-    document.getElementById("in2").innerHTML = 0.0;
-}
 
-// ------------------------------------------ Haar Wavelets ----------------------------------------------------------
+    var xValues = makeArr(-40,40,81);
+    var xBig = makeArr(-60,60,121);
+    var xValues1 = makeArr(-40+delayHere,40+delayHere,81);
+    var inValuesHere = [];
+    var yValuesHere = [];
 
-function har(){
-    sig5 = document.getElementById("sig-names5").value
-	sig6 = document.getElementById("sig-names6").value
+    if(sigChoice==0)
+    {
+        for(var i=0; i<=80; i++)
+        {
+            if(i<27)
+            {
+                inValuesHere.push(0);
+            }
+            else if(i<54)
+            {
+                inValuesHere.push(1);
+            }
+            else
+            {
+                inValuesHere.push(0);
+            }
+        }
+            for(var i=0; i<=80; i++)
+            {
+                if(i<27+delayHere)
+                {
+                    yValuesHere.push(0);
+                }
+                else if(i<54+delayHere)
+                {
+                    yValuesHere.push(scaleHere);
+                }
+                else
+                {
+                    yValuesHere.push(0);
+                }
+            }
+    }
+    else
+    {
+        for(var i=0; i<=80; i++)
+        {
+            inValuesHere.push(Math.sin(0.5*Math.PI*xValues[i]));
+        }
+        if(delayHere<0)
+        {
+            for(var i=-delayHere; i<=80; i++)
+            {
+                yValuesHere.push(inValuesHere[i]*scaleHere);
+            }
+            var index1 = 0;
+            var index2 = 0;
+            for(var i=0; i<121; i++)
+            {
+                if(xBig[i]==40)
+                {
+                    index1 = i;
+                }
+                if(xBig[i]==40-delayHere)
+                {
+                    index2 = i;
+                }
+            }
+            for(var i=index1+1; i<=index2; i++)
+            {
+                yValuesHere.push(scaleHere*Math.sin(0.5*Math.PI*xBig[i]));
+            }
+        }
+        else
+        {
+            var index1 = 0;
+            var index2 = 0;
+            for(var i=0; i<121; i++)
+            {
+                if(xBig[i]==-40)
+                {
+                    index1 = i;
+                }
+                if(xBig[i]==-40-delayHere)
+                {
+                    index2 = i;
+                }
+            }
+            for(var i=index2; i<index1; i++)
+            {
+                yValuesHere.push(scaleHere*Math.sin(0.5*Math.PI*xBig[i]));
+            }
+            for(var i=0; i<80-delayHere; i++)
+            {
+                yValuesHere.push(inValues[i]*scaleHere);
+            }
+        }
+    }
+
+    if(count!=1)
+    {
+        var element = document.getElementById("resultBLK")
+        element.style.color = "#FF0000";
+        element.style.fontWeight = "bold";
+        element.innerHTML = 'Wrong Answer! Check Plot for your signal!';
+        yFinalHere = yValuesHere;
+        if(spl[0])
+        {
+            yFinalHere = defFunction(b1-3,yFinalHere);
+        }
+        if(spl[1])
+        {
+            yFinalHere = defFunction(b2-3,yFinalHere);
+        }
+        if(spl[2])
+        {
+            yFinalHere = defFunction(b3-3,yFinalHere);
+        }
+
+        var trace1 = {
+            x: xBig,
+            y: yFinal,
+            type: 'scatter',
+            name: 'original',
+            mode: 'lines'
+        };
+        var trace2 = {
+            x: xBig,
+            y: yFinalHere,
+            type: 'scatter',
+            name: 'Your Output',
+            mode: 'lines'
+        };
+        var data1 = [trace1,trace2];
     
-    sig5 = parseFloat(sig5);
-    sig6 = parseFloat(sig6);
-
-    var xValues = makeArr(-2,2,1000);
-    var yValues1 = [];
-    for (var i=0; i<1000; i++)
+        var config = {responsive: true}
+    
+        var layout1 = {
+            title: 'Check It',
+            xaxis: {
+                title: 'Time (t)'
+            },
+            yaxis: {
+                title: 'Amplitude (A)'
+            }
+        };
+        Plotly.newPlot('figure14', data1, layout1, config);
+    var update = {
+      width: 400,
+      height: 300
+  };
+  Plotly.relayout('figure14', update);
+        return;
+    }
+    else
     {
-        if(i<parseFloat(500/sig5))
+        var index = 0;
+        for(var i=0; i<=2; i++)
         {
-            yValues1.push(am1);
+            if(spl[i])
+            {
+                index = i;
+                break;
+            }
         }
-        else if(i<parseFloat(1000/sig5))
+        if(i==0)
+            yFinalHere = defFunction(b1-3,yValuesHere);
+        else if(i==1)
+            yFinalHere = defFunction(b2-3,yValuesHere);
+        else
+            yFinalHere = defFunction(b3-3,yValuesHere);
+
+        if(yFinalHere.length!=yFinal.length)
         {
-            yValues1.push(-am1);
+            var element = document.getElementById("resultBLK")
+            element.style.color = "#FF0000";
+            element.style.fontWeight = "bold";
+            element.innerHTML = 'Wrong Answer! Check Plot for your signal!';
+            var trace1 = {
+                x: xBig,
+                y: yFinal,
+                type: 'scatter',
+                name: 'original',
+                mode: 'lines'
+            };
+            var trace2 = {
+                x: xBig,
+                y: yFinalHere,
+                type: 'scatter',
+                name: 'Your Output',
+                mode: 'lines'
+            };
+            var data1 = [trace1,trace2];
+        
+            var config = {responsive: true}
+        
+            var layout1 = {
+                title: 'Check It',
+                xaxis: {
+                    title: 'Time (t)'
+                },
+                yaxis: {
+                    title: 'Amplitude (A)'
+                }
+            };
+            Plotly.newPlot('figure14', data1, layout1, config);
+    var update = {
+      width: 400,
+      height: 300
+  };
+  Plotly.relayout('figure14', update);
+            return;
+        }
+    }
+    var flag1 = 0;
+    for(var i=0; i<yFinal.length; i++)
+    {
+        if(yFinal[i]!=yFinalHere[i] && i>0 && i!=delayHere)
+        {
+            flag1 = 1;
+            break;
+        }
+    }
+
+    if(flag1)
+    {
+        var element = document.getElementById("resultBLK")
+            element.style.color = "#FF0000";
+            element.style.fontWeight = "bold";
+            element.innerHTML = 'Wrong Answer! Check Plot for your signal!';
+    }
+    else
+    {
+        if(delayHere!=delayChoice)
+        {
+            var element = document.getElementById("resultBLK")
+            element.style.color = "#FF0000";
+            element.style.fontWeight = "bold";
+            element.innerHTML = 'Wrong Answer! Check Plot for your signal!';
         }
         else
         {
-            yValues1.push(0);
-        }
-    }
-
-    var yValues2 = [];
-    for (var i=0; i<1000; i++)
-    {
-        if(i<parseFloat(500/sig6))
-        {
-            yValues2.push(am1);
-        }
-        else if(i<parseFloat(1000/sig6))
-        {
-            yValues2.push(-am1);
-        }
-        else
-        {
-            yValues2.push(0);
-        }
-    }
-
-    yValuesFinal = math.dotMultiply(yValues1,yValues2)
-
-    var sum = 0;
-    for(var i=0; i<1000; i++)
-    {
-        sum += yValuesFinal[i];
-    }
-
-    sum /= 1000;
-    if(sum<0.001)
-    {
-        sum = 0;
-    }
-
-    document.getElementById("in3").innerHTML = sum.toPrecision(2);
-
-    yValuesPos = [];
-    yValuesNeg = [];
-
-    for(var i=0; i<1000; i++)
-    {
-        if(yValuesFinal[i]<0)
-        {
-            yValuesPos.push(yValuesFinal[i]);
-            yValuesNeg.push(0);
-        }
-        else
-        {
-            yValuesNeg.push(yValuesFinal[i]);
-            yValuesPos.push(0);
+            var element = document.getElementById("resultBLK")
+            element.style.color = "#006400";
+            element.style.fontWeight = "bold";
+            element.innerHTML = 'Right Answer!';
         }
     }
 
     var trace1 = {
-        x: xValues,
-        y: yValuesPos,
+        x: xValues1,
+        y: yFinal,
         type: 'scatter',
-        fill: 'tonexty'
+        name: 'original',
+        mode: 'lines'
     };
-
     var trace2 = {
-        x: xValues,
-        y: yValuesNeg,
+        x: xValues1,
+        y: yFinalHere,
         type: 'scatter',
-        fill: 'tozeroy'
+        name: 'original',
+        mode: 'lines'
     };
-      
-    var data = [trace1, trace2];
+    var data1 = [trace1, trace2];
 
     var config = {responsive: true}
 
-    var layout = {
-        title: 'Orthogonality of Haar Wavelets',
-        showlegend: false,
+    var layout1 = {
+        title: 'Check It',
         xaxis: {
             title: 'Time (t)'
         },
@@ -1043,235 +1533,16 @@ function har(){
             title: 'Amplitude (A)'
         }
     };
-      
-    Plotly.newPlot('figure4', data, layout, config);
-      var update = {
-        width: 500,
-        height: 400
+
+    Plotly.newPlot('figure14', data1, layout1, config);
+    var update = {
+      width: 400,
+      height: 300
     };
-    Plotly.relayout('figure4', update);
+    Plotly.relayout('figure14', update);
 }
 
-function orth(){
-    var sel = document.getElementById("sig-names7").value;
-    sel = parseFloat(sel);
-    freq = document.getElementById("fre3").value;
-    freq = parseFloat(freq);
-    am = document.getElementById("amp3").value;
-    am = parseFloat(am);
-    
-    if(sel==1)
-    {
-        var xValues = makeArr(-2*Math.PI,2*Math.PI,1000);
-        var yValues = [];
-        for (var i=0; i<1000; i++)
-        {
-            yValues.push(am*Math.sin(freq*xValues[i]));
-        }
-    }
-    else if(sel==2)
-    {
-        var xValues = makeArr(-2*Math.PI,2*Math.PI,1000);
-        var yValues = [];
-        for (var i=0; i<1000; i++)
-        {
-            yValues.push(am*Math.cos(freq*xValues[i]));
-        }
-    }
-    else if(sel==3)
-    {
-        var xValues = makeArr(-2,2,1000);
-        var yValues = [];
-        for (var i=0; i<1000; i++)
-        {
-            yValues.push(am*xValues[i]);
-        }
-    }
-    else if(sel==4)
-    {
-        var xValues = makeArr(-2,2,1000);
-        var yValues = [];
-        for (var i=0; i<1000; i++)
-        {
-            if(i<333)
-            {
-                yValues.push(0);
-            }
-            else if(i<666)
-            {
-                yValues.push(am);
-            }
-            else
-            {
-                yValues.push(0);
-            }
-        }
-    }
-    else
-    {
-        var xValues = makeArr(-2,2,1000);
-        var yValues = [];
-        for (var i=0; i<1000; i++)
-        {
-            if(i<parseFloat(500/freq))
-            {
-                yValues.push(am);
-            }
-            else if(i<parseFloat(1000/freq))
-            {
-                yValues.push(-am);
-            }
-            else
-            {
-                yValues.push(0);
-            }
-        }
-    }
-
-    var sel1 = document.getElementById("sig-names8").value;
-    sel1 = parseFloat(sel1);
-    freq1 = document.getElementById("fre4").value;
-    freq1 = parseFloat(freq1);
-    am1 = document.getElementById("amp4").value;
-    am1 = parseFloat(am1);
-    
-    if(sel1==1)
-    {
-        var xValues1 = makeArr(-2*Math.PI,2*Math.PI,1000);
-        var yValues1 = [];
-        for (var i=0; i<1000; i++)
-        {
-            yValues1.push(am1*Math.sin(freq1*xValues1[i]));
-        }
-    }
-    else if(sel1==2)
-    {
-        var xValues1 = makeArr(-2*Math.PI,2*Math.PI,1000);
-        var yValues1 = [];
-        for (var i=0; i<1000; i++)
-        {
-            yValues1.push(am1*Math.cos(freq1*xValues1[i]));
-        }
-    }
-    else if(sel1==3)
-    {
-        var xValues1 = makeArr(-2,2,1000);
-        var yValues1 = [];
-        for (var i=0; i<1000; i++)
-        {
-            yValues1.push(am1*xValues1[i]);
-        }
-    }
-    else if(sel1==4)
-    {
-        var xValues1 = makeArr(-2,2,1000);
-        var yValues1 = [];
-        for (var i=0; i<1000; i++)
-        {
-            if(i<333)
-            {
-                yValues1.push(0);
-            }
-            else if(i<666)
-            {
-                yValues1.push(am1);
-            }
-            else
-            {
-                yValues1.push(0);
-            }
-        }
-    }
-    else
-    {
-        var xValues1 = makeArr(-2,2,1000);
-        var yValues1 = [];
-        for (var i=0; i<1000; i++)
-        {
-            if(i<parseFloat(500/freq1))
-            {
-                yValues1.push(am1);
-            }
-            else if(i<parseFloat(1000/freq1))
-            {
-                yValues1.push(-am1);
-            }
-            else
-            {
-                yValues1.push(0);
-            }
-        }
-    }
-
-    yValuesFinal = math.dotMultiply(yValues,yValues1)
-
-    var sum = 0;
-    for(var i=0; i<1000; i++)
-    {
-        sum += yValuesFinal[i];
-    }
-
-    sum /= 1000;
-    if(sum<0.001)
-    {
-        sum = 0;
-    }
-
-    document.getElementById("in4").innerHTML = sum.toPrecision(2);
-
-    yValuesPos = [];
-    yValuesNeg = [];
-
-    for(var i=0; i<1000; i++)
-    {
-        if(yValuesFinal[i]<0)
-        {
-            yValuesPos.push(yValuesFinal[i]);
-            yValuesNeg.push(0);
-        }
-        else
-        {
-            yValuesNeg.push(yValuesFinal[i]);
-            yValuesPos.push(0);
-        }
-    }
-
-    var trace1 = {
-        x: xValues,
-        y: yValuesPos,
-        type: 'scatter',
-        fill: 'tonexty'
-    };
-
-    var trace2 = {
-        x: xValues,
-        y: yValuesNeg,
-        type: 'scatter',
-        fill: 'tozeroy'
-    };
-      
-    var data = [trace1, trace2];
-
-    var config = {responsive: true}
-
-    var layout = {
-        title: 'Product of Signals',
-        showlegend: false,
-        xaxis: {
-            title: 'Time (t)'
-        },
-        yaxis: {
-            title: 'Amplitude (A)'
-        }
-    };
-      
-    Plotly.newPlot('figure5', data, layout, config);
-      var update = {
-        width: 500,
-        height: 400
-    };
-    Plotly.relayout('figure5', update);
-}*/
+/* ---------------------------- LinSpace -------------------------------------- */
 
 function makeArr(startValue, stopValue, cardinality) {
     var arr = [];
@@ -1286,9 +1557,9 @@ function makeArr(startValue, stopValue, cardinality) {
 
 function startup()
 {
-    imp();
-    step();
+    impStp();
     syst();
+    mavg();
     black();
     black1();
     blocks();

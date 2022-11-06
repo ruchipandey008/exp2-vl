@@ -22,11 +22,11 @@
         <div class="column">
             <div class="tab">
                 <button class="tablinks" onclick="openPart(event, 'IR')", id="default">Impulse Response</button>
-                <button class="tablinks" onclick="openPart(event, 'STP')">Step Response</button>
                 <button class="tablinks" onclick="openPart(event, 'SYS')">LTI System</button>
-                <button class="tablinks" onclick="openPart(event, 'BLK1')">Black Box Quiz 1</button>
-                <button class="tablinks" onclick="openPart(event, 'BLK2')">Black Box Quiz 2</button>
-				<button class="tablinks" onclick="openPart(event, 'BLKS')">Blocks Quiz 1</button>
+				<button class="tablinks" onclick="openPart(event, 'MVG')">Moving Average</button>
+                <button class="tablinks" onclick="openPart(event, 'BLK1')">Quiz 1</button>
+                <button class="tablinks" onclick="openPart(event, 'BLK2')">Quiz 2</button>
+				<button class="tablinks" onclick="openPart(event, 'BLKS')">Blocks Quiz</button>
             </div>
         </div>
     </div>
@@ -39,51 +39,34 @@
 					<div class="column left">
 						<div class="box">
 							<select id="sig-names">
-							  <option value="1">Impulse</option>
+							  <option value="1">Unit Impulse</option>
+							  <option value="2">Unit Step</option>
 							</select>
 						</div>
 					</div>
 					<div class="column middle">
 						<div class="box1">
 							<select id="imp-names">
-							  <option value="1">Differentiator</option>
-							  <option value="2">Integrator</option>
+							  <option value="1">Scaling  (10)</option>
+							  <option value="2">Shifting (10)</option>
+							  <option value="3">Differentiator</option>
+							  <option value="4">Integrator</option>
 							</select>
 						</div>
-						<button class="button1" id="jsbutton" role="button" onClick="imp()">Check</button>
+						
 					</div>
 					<div class="column right">
 						<div id='figure1'></div>
 					</div>
 				</div>
-			</div>
-		</section>
-	</div>
-
-	<div id="STP" class="tabcontent">
-		<section class="stp" id="step">
-			<div class="max-width">
-				<h2 class="title">Step Response of Known Systems</h2>
-				<div class="stp-content">
+				<div class="imp-content">
 					<div class="column left">
-						<div class="box">
-							<select id="sig-names1">
-							  <option value="1">Unit Step</option>
-							</select>
-						</div>
 					</div>
-					<div class="column middle">
-						<div class="box1">
-							<select id="imp-names1">
-							  <option value="1">Differentiator</option>
-							  <option value="2">Integrator</option>
-							</select>
-						</div>
-						<button class="button1" id="jsbutton1" role="button" onClick="step()">Check</button>
+					<div class="column middle1">
+						<button class="button1" id="jsbutton" role="button" onClick="impStp()">Check</button>
 					</div>
-					<div class="column right">
-						<div id='figure2'></div>
-					</div>
+				</div>
+				<div class="column right">
 				</div>
 			</div>
 		</section>
@@ -92,7 +75,7 @@
 	<div id="SYS" class="tabcontent">
 		<section class="sys" id="system">
 			<div class="max-width">
-				<h2 class="title">Integrator and Differentiator Systems</h2>
+				<h2 class="title">Known LTI Systems</h2>
 				<div class="sys-content">
 					<div class="column left">
 						<div class="box">
@@ -108,15 +91,65 @@
 					<div class="column middle">
 						<div class="box1">
 							<select id="sig-names2">
-								<option value="1">Differentiator</option>
-								<option value="2">Integrator</option>
-							  </select>
+							  <option value="1">Scaling  (10)</option>
+							  <option value="2">Shifting (10)</option>
+							  <option value="3">Differentiator</option>
+							  <option value="4">Integrator</option>
+							</select>
 						</div>
-						<button class="button1" id="jsbutton2" role="button" onClick="syst()">Check</button>
+						
 					</div>
 					<div class="column right">
 						<div id='figure3'></div>
 					</div>
+				</div>
+				<div class="sys-content">
+					<div class="column left"></div>
+					<div class="column middle1">
+						<button class="button1" id="jsbutton2" role="button" onClick="syst()">Check</button>
+					</div>
+					<div class="column right"></div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<div id="MVG" class="tabcontent">
+		<section class="mva" id="average">
+			<div class="max-width">
+				<h2 class="t">Moving Average System</h2>
+				<div class="mva-content">
+					<div class="column left">
+						<div class="box" style="margin-left: 35%;">
+							<select id="imp-names3">
+								<option value="1">Sine</option>
+								<option value="2">Cosine</option>
+								<option value="3">Ramp</option>
+								<option value="4">Pulse</option>
+								<option value="5">Haar</option>
+							</select>
+						</div>
+						<div class="fill1"> Noise Variance: &emsp; <input type=number id="noise" value=1 step=0.5> </div>
+						<div class="fill2"> Window Size: &emsp; <input type=number id="filter" value=5 step=0.5> </div>
+					</div>
+					<div class="column middle">
+						<div class="box2">
+							<select id="sig-names6">
+							  <option value="1">M A</option>
+							</select>
+						</div>
+						
+					</div>
+					<div class="column right">
+						<div id='figure11'></div>
+					</div>
+				</div>
+				<div class="mva-content">
+					<div class="column left"></div>
+					<div class="column middle1">
+						<button class="button1" id="jsbutton9" role="button" onClick="mavg()">Check</button>
+					</div>
+					<div class="column right"></div>
 				</div>
 			</div>
 		</section>
@@ -129,7 +162,6 @@
 				<div class="blk1-content">
 					<div class="column left">
 						<div style = "position:relative; left:-20%; top:-100px;" id='figure4'></div>
-						<div style = "position:relative; left:-20%; top:-70px;" id='figure5'></div>
 					</div>
 					<div class="column middle">
 						<div class="box2">
@@ -137,20 +169,43 @@
 								<option value="1">h[n]</option>
 							  </select>
 						</div>
+					</div>
+					<div class="column right">
+						<div style = "position:relative; left:10%; top:30px;" id='figure6'></div>
+					</div>
+				</div>
+				<div class="blk1-content">
+					<div class="column left">
+						<div style = "position:relative; left:-20%; top:-70px;" id='figure5'></div>
+					</div>
+					<div class="column middle">
 						<div class="box3">
 							<select id="sig-names4">
 								<option value="1">h[n]</option>
 							  </select>
 						</div>
+					</div>
+					<div class="column right1">
+						<div style = "position:relative; left:10%; top:60px;" id='figure7'></div>
+					</div>
+				</div>
+				<div class="blk1-content">
+					<div class="column left">
+					</div>
+					<div class="column middle1">
 						<button class="button3" id="jsbutton3" role="button" onClick="blackCheck()">Check</button>
 					</div>
-					<div class="column right">
-						<div style = "position:relative; left:10%; top:30px;" id='figure6'></div>
-						<div style = "position:relative; left:10%; top:60px;" id='figure7'></div>
-						<h3 style = "position:relative; left:10%; top:70px;">Answer these Signal Parameters of Output</h3>
+					<div class="column right2">
+						<h3 style = "position:relative; left:10%; top:70px;">Fill the Parameters</h3>
 						<div class="fill1"> Frequency: &emsp; <input type=number id="fre1" value=1 step=0.5> </div>
 						<div class="fill2"> Amplitude: &emsp; <input type=number id="amp1" value=1 step=0.5> </div>
 						<div class="fill2"> Shift from Origin: &emsp; <input type=number id="shift1" value=1 step=0.5> </div>
+					</div>
+				</div>
+				<div class="v-datalist-container components-list" style="margin-top: 10%;">
+					<div class="v-datalist-title">Observations</div>
+					<div class="v-datalist-row">
+						<div id="result1"></div>
 					</div>
 				</div>
 			</div>
@@ -160,11 +215,10 @@
 	<div id="BLK2" class="tabcontent">
 		<section class="blk" id="blackbox2">
 			<div class="max-width">
-				<h2 class="title">Black Box Quiz</h2>
+				<h2 class="t">Black Box Quiz</h2>
 				<div class="blk-content">
 					<div class="column left">
 						<div style = "position:relative; left:-20%; top: -100px;" id='figure8'></div>
-						<div style = "position:relative; left:-20%; top: 60px;" id='figure10'></div>
 					</div>
 					<div class="column middle">
 						<div class="box4">
@@ -172,15 +226,23 @@
 								<option value="1">h[n]</option>
 							  </select>
 						</div>
+					</div>
+					<div class="column right">
+						<div style = "position:relative; left:10%; top:100px;" id='figure9'></div>
+					</div>
+				</div>
+				<div class="blk-content">
+					<div class="column left1">
+						<div style = "position:relative; left:-20%; top: 60px;" id='figure10'></div>
+					</div>
+					<div class="column middle1">
 						<div class="box4">
 							<select id="sig-names5">
 								<option value="1">h[n]</option>
 							  </select>
 						</div>
-						<button class="button3" id="jsbutton3" role="button" onClick="blackCheck1()">Check</button>
 					</div>
-					<div class="column right">
-						<div style = "position:relative; left:10%; top:100px;" id='figure9'></div>
+					<div class="column right1">
 						<h3 style = "position:relative; left:10%; top:70px; float: left;">Answer the following signal parameters for impulse 1</h3>
 						<div class="fill1"> Shift from Origin: &emsp; <input type=number id="shift2" value=1 step=0.5> </div>
 						<div class="fill2"> Amplitude: &emsp; <input id="amp2" value=1 step=0.5> </div>
@@ -195,43 +257,109 @@
 						<div class="fill2"> Amplitude: &emsp; <input id="amp5" value=1 step=0.5> </div>
 					</div>
 				</div>
+				<div class="blk-content">
+					<div class="column left">
+					</div>
+					<div class="column middle2">
+						<button class="button3" id="jsbutton3" role="button" onClick="blackCheck1()">Check</button>
+					</div>
+					<div class="column right2">
+						
+					</div>
+				</div>
+				<div class="v-datalist-container components-list" style="margin-top: 10%; margin-bottom: 10%;">
+					<div class="v-datalist-title">Observations</div>
+					<div class="v-datalist-row">
+						<div id="result2"></div>
+					</div>
+				</div>
 			</div>
 		</section>
 	</div>
 
 	<div id="BLKS" class="tabcontent">
-		<div class="columns is-centered is-flex-direction-row is-flex-wrap-wrap is-align-content-start">
-			<div class="column is-2-desktop is-12-tablet is-12-mobile">
-				<div class="v-datalist-container" style="height:100%">
-					<div class="v-datalist-title">Components</div>
-					<div class="v-datalist-row components-list" id="toolbar">
-						<div class="component-button sca" onclick="addGate(event)">Scalar</div>
-						<div class="component-button del" onclick="addGate(event)">Delay</div>
-						<div class="component-button int" onclick="addGate(event)">Cumulative Sum</div>
-						<div class="component-button dif" onclick="addGate(event)">Difference</div>
+		<section class="blok" id="blocks">
+			<div class="max-width">
+				<h2 class="t">Blocks Quiz</h2>
+				<div class="blok-content">
+					<div class="column left">
+						<div style = "position:relative; left:-20%; top:-100px;" id='figure12'></div>
+					</div>
+					<div class="column middle">
+						<div class="box2">
+							<select id="sig-names3">
+								<option value="1">h[n]</option>
+							  </select>
+						</div>
+					</div>
+					<div class="column right">
+						<div style = "position:relative; left:10%; top:30px;" id='figure13'></div>
 					</div>
 				</div>
-			</div>
-			<div class="column is-7-desktop is-12-tablet is-12-mobile">
-				<div id="workings-board">
-					<div style = "position:relative;" id='figure11'></div>
-					<div id="working-area" style="border-style: solid; border-color: #98CB3B;"></div>
+				<h2 class="t1">Construct h[n] using the systems given below :</h2>
+				<div class="blok-content">
+					<div class="column one">
+						<div class="boxB">
+							<select id="sig-namesBLK1">
+							  <option value="1">Scaling</option>
+							  <option value="2">Shifting</option>
+							  <option value="3">Differentiator</option>
+							  <option value="4">Integrator</option>
+							  <option value="5">Moving Average</option>
+							  <option value="6">None</option>
+							</select>
+						</div>
+					</div>
+					<div class="column two">
+						<div class="boxB">
+							<select id="sig-namesBLK2">
+							  <option value="1">Scaling</option>
+							  <option value="2">Shifting</option>
+							  <option value="3">Differentiator</option>
+							  <option value="4">Integrator</option>
+							  <option value="5">Moving Average</option>
+							  <option value="6">None</option>
+							</select>
+						</div>
+					</div>
+					<div class="column three">
+						<div class="boxB">
+							<select id="sig-namesBLK3">
+							  <option value="1">Scaling</option>
+							  <option value="2">Shifting</option>
+							  <option value="3">Differentiator</option>
+							  <option value="4">Integrator</option>
+							  <option value="5">Moving Average</option>
+							  <option value="6">None</option>
+							</select>
+						</div>
+					</div>
+					<div class="column right">
+						<div style = "position:relative; left:10%; top:30px;" id='figure14'></div>
+					</div>
 				</div>
-			</div>
-			<div class="column is-3-desktop is-12-tablet is-12-mobile">
-				<div class="v-datalist-container components-list">
+				<div class="blok-content">
+					<div class="column one1">
+						<div class="fill1"> Scale/Delay of Block1 : &emsp; <input type=number id="block1" value=1 step=0.5> </div>
+					</div>
+					<div class="column two1">
+						<div class="fill1"> Scale/Delay of Block2 : &emsp; <input type=number id="block2" value=1 step=0.5> </div>
+					</div>
+					<div class="column three1">
+						<div class="fill1"> Scale/Delay of Block3 : &emsp; <input type=number id="block3" value=1 step=0.5> </div>
+					</div>
+					<div class="column right1">
+						<button class="buttonB" id="jsbuttonBLK" role="button" onClick="blockCheck()">Check</button>
+					</div>
+				</div>
+				<div class="v-datalist-container components-list" style="margin-top: 10%; margin-bottom: 15%;">
 					<div class="v-datalist-title">Observations</div>
 					<div class="v-datalist-row">
-						<div id="result"></div>
-					</div>
-					<div class="v-datalist-row">
-						
-						<button class="button3" id="jsbutton7" role="button" onClick="simulate()">Simulate</button>
-						<button class="button3" id="jsbutton8" role="button" onClick="check()">Submit</button>
+						<div id="resultBLK"></div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</section>
 	</div>
 
   <script src="./js/main.js"></script>
