@@ -21,9 +21,9 @@
         </div>
         <div class="column">
             <div class="tab">
-                <button class="tablinks" onclick="openPart(event, 'IR')", id="default">Impulse Response</button>
-                <button class="tablinks" onclick="openPart(event, 'SYS')">LTI System</button>
-				<button class="tablinks" onclick="openPart(event, 'MVG')">Moving Average</button>
+                <button class="tablinks" onclick="openPart(event, 'IR')", id="default">Impulse and Step Response</button>
+                <button class="tablinks" onclick="openPart(event, 'SYS')">LTI Systems</button>
+				<button class="tablinks" onclick="openPart(event, 'MVG')">LTI System Application</button>
                 <button class="tablinks" onclick="openPart(event, 'BLK1')">Quiz 1</button>
                 <button class="tablinks" onclick="openPart(event, 'BLK2')">Quiz 2</button>
 				<button class="tablinks" onclick="openPart(event, 'BLKS')">Blocks Quiz</button>
@@ -34,7 +34,7 @@
 	<div id="IR" class="tabcontent">
 		<section class="imp" id="impulse">
 			<div class="max-width">
-				<h2 class="title">Impulse Response of Known Systems</h2>
+				<h2 class="title">Impulse Response and Step of Few Systems</h2>
 				<div class="imp-content">
 					<div class="column left">
 						<div class="box">
@@ -50,10 +50,9 @@
 							  <option value="1">Scaling  (10)</option>
 							  <option value="2">Shifting (10)</option>
 							  <option value="3">Differentiator</option>
-							  <option value="4">Integrator</option>
+							  <option value="4">Accumulator</option>
 							</select>
 						</div>
-						
 					</div>
 					<div class="column right">
 						<div id='figure1'></div>
@@ -75,7 +74,7 @@
 	<div id="SYS" class="tabcontent">
 		<section class="sys" id="system">
 			<div class="max-width">
-				<h2 class="title">Known LTI Systems</h2>
+				<h2 class="title">Working of LTI Systems</h2>
 				<div class="sys-content">
 					<div class="column left">
 						<div class="box">
@@ -94,7 +93,7 @@
 							  <option value="1">Scaling  (10)</option>
 							  <option value="2">Shifting (10)</option>
 							  <option value="3">Differentiator</option>
-							  <option value="4">Integrator</option>
+							  <option value="4">Accumulator</option>
 							</select>
 						</div>
 						
@@ -117,7 +116,7 @@
 	<div id="MVG" class="tabcontent">
 		<section class="mva" id="average">
 			<div class="max-width">
-				<h2 class="t">Moving Average System</h2>
+				<h2 class="t">Moving Average for Noise Removal</h2>
 				<div class="mva-content">
 					<div class="column left">
 						<div class="box" style="margin-left: 35%;">
@@ -158,7 +157,7 @@
 	<div id="BLK1" class="tabcontent">
 		<section class="blk1" id="blackbox">
 			<div class="max-width">
-				<h2 class="t">Black Box Quiz</h2>
+				<h2 class="t">Guess the Output</h2>
 				<div class="blk1-content">
 					<div class="column left">
 						<div style = "position:relative; left:-20%; top:-100px;" id='figure4'></div>
@@ -215,7 +214,7 @@
 	<div id="BLK2" class="tabcontent">
 		<section class="blk" id="blackbox2">
 			<div class="max-width">
-				<h2 class="t">Black Box Quiz</h2>
+				<h2 class="t">Guess the Output</h2>
 				<div class="blk-content">
 					<div class="column left">
 						<div style = "position:relative; left:-20%; top: -100px;" id='figure8'></div>
@@ -280,7 +279,7 @@
 	<div id="BLKS" class="tabcontent">
 		<section class="blok" id="blocks">
 			<div class="max-width">
-				<h2 class="t">Blocks Quiz</h2>
+				<h2 class="t">Build Your System</h2>
 				<div class="blok-content">
 					<div class="column left">
 						<div style = "position:relative; left:-20%; top:-100px;" id='figure12'></div>
@@ -296,7 +295,7 @@
 						<div style = "position:relative; left:10%; top:30px;" id='figure13'></div>
 					</div>
 				</div>
-				<h2 class="t1">Construct h[n] using the systems given below :</h2>
+				<h2 class="t1">Construct h[n] using the the given systems :</h2>
 				<div class="blok-content">
 					<div class="column one">
 						<div class="boxB">
@@ -304,7 +303,7 @@
 							  <option value="1">Scaling</option>
 							  <option value="2">Shifting</option>
 							  <option value="3">Differentiator</option>
-							  <option value="4">Integrator</option>
+							  <option value="4">Accumulator</option>
 							  <option value="5">Moving Average</option>
 							  <option value="6">None</option>
 							</select>
@@ -316,7 +315,7 @@
 							  <option value="1">Scaling</option>
 							  <option value="2">Shifting</option>
 							  <option value="3">Differentiator</option>
-							  <option value="4">Integrator</option>
+							  <option value="4">Accumulator</option>
 							  <option value="5">Moving Average</option>
 							  <option value="6">None</option>
 							</select>
@@ -328,7 +327,7 @@
 							  <option value="1">Scaling</option>
 							  <option value="2">Shifting</option>
 							  <option value="3">Differentiator</option>
-							  <option value="4">Integrator</option>
+							  <option value="4">Accumulator</option>
 							  <option value="5">Moving Average</option>
 							  <option value="6">None</option>
 							</select>

@@ -122,7 +122,7 @@ function impStp(){
             title: 'Impulse Response',
             showlegend: false,
             xaxis: {
-                title: 'Time (t)'
+                title: 'Time [n]'
             },
             yaxis: {
                 title: 'Amplitude (A)'
@@ -135,7 +135,7 @@ function impStp(){
             title: 'Step Response',
             showlegend: false,
             xaxis: {
-                title: 'Time (t)'
+                title: 'Time [n]'
             },
             yaxis: {
                 title: 'Amplitude (A)'
@@ -331,7 +331,7 @@ function syst(){
     var layout = {
         title: 'LTI System Output',
         xaxis: {
-            title: 'Time (t)'
+            title: 'Time [n]'
         },
         yaxis: {
             title: 'Amplitude (A)'
@@ -498,7 +498,7 @@ function mavg(){
     var layout = {
         title: 'Moving Average Filter',
         xaxis: {
-            title: 'Time (t)'
+            title: 'Time [n]'
         },
         yaxis: {
             title: 'Amplitude (A)'
@@ -596,7 +596,7 @@ function black(){
     var layout1 = {
         title: 'Input Signal',
         xaxis: {
-            title: 'Time (t)'
+            title: 'Time [n]'
         },
         yaxis: {
             title: 'Amplitude (A)'
@@ -606,7 +606,7 @@ function black(){
     var layout2 = {
         title: 'Output Signal',
         xaxis: {
-            title: 'Time (t)'
+            title: 'Time [n]'
         },
         yaxis: {
             title: 'Amplitude (A)'
@@ -707,7 +707,7 @@ function blackCheck(){
     var layout2 = {
         title: 'Simulated',
         xaxis: {
-            title: 'Time (t)'
+            title: 'Time [n]'
         },
         yaxis: {
             title: 'Amplitude (A)'
@@ -822,7 +822,7 @@ function black1(){
     var layout1 = {
         title: 'Input Signal',
         xaxis: {
-            title: 'Time (t)'
+            title: 'Time [n]'
         },
         yaxis: {
             title: 'Amplitude (A)'
@@ -832,7 +832,7 @@ function black1(){
     var layout2 = {
         title: 'Output Signal',
         xaxis: {
-            title: 'Time (t)'
+            title: 'Time [n]'
         },
         yaxis: {
             title: 'Amplitude (A)'
@@ -1011,7 +1011,7 @@ function blocks(){
     sigChoice = Math.floor(Math.random()*2);
     scaleChoice = Math.floor(Math.random()*41)-20;
     delayChoice = Math.floor(Math.random()*41)-20;
-    boxChoice = Math.floor(Math.random()*4);
+    boxChoice = Math.floor(Math.random()*3);
 
     console.log(scaleChoice,delayChoice,boxChoice);
 
@@ -1124,7 +1124,7 @@ function blocks(){
     var layout1 = {
         title: 'Input Signal',
         xaxis: {
-            title: 'Time (t)'
+            title: 'Time [n]'
         },
         yaxis: {
             title: 'Amplitude (A)'
@@ -1143,7 +1143,7 @@ function blocks(){
     var layout2 = {
         title: 'Output Signal',
         xaxis: {
-            title: 'Time (t)'
+            title: 'Time [n]'
         },
         yaxis: {
             title: 'Amplitude (A)'
@@ -1397,7 +1397,7 @@ function blockCheck(){
         var layout1 = {
             title: 'Check It',
             xaxis: {
-                title: 'Time (t)'
+                title: 'Time [n]'
             },
             yaxis: {
                 title: 'Amplitude (A)'
@@ -1456,7 +1456,7 @@ function blockCheck(){
             var layout1 = {
                 title: 'Check It',
                 xaxis: {
-                    title: 'Time (t)'
+                    title: 'Time [n]'
                 },
                 yaxis: {
                     title: 'Amplitude (A)'
@@ -1502,7 +1502,7 @@ function blockCheck(){
             var element = document.getElementById("resultBLK")
             element.style.color = "#006400";
             element.style.fontWeight = "bold";
-            element.innerHTML = 'Right Answer!';
+            element.innerHTML = 'Right Answer! Upto computational precision';
         }
     }
 
@@ -1511,14 +1511,17 @@ function blockCheck(){
         y: yFinal,
         type: 'scatter',
         name: 'original',
-        mode: 'lines'
+        mode: 'lines',
     };
     var trace2 = {
         x: xValues1,
         y: yFinalHere,
         type: 'scatter',
-        name: 'original',
-        mode: 'lines'
+        name: 'Your Output',
+        mode: 'lines',
+        line: {
+            color: 'rgb(0, 128, 0)',
+        }
     };
     var data1 = [trace1, trace2];
 
@@ -1527,7 +1530,7 @@ function blockCheck(){
     var layout1 = {
         title: 'Check It',
         xaxis: {
-            title: 'Time (t)'
+            title: 'Time [n]'
         },
         yaxis: {
             title: 'Amplitude (A)'

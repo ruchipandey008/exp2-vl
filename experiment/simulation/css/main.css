@@ -123,8 +123,8 @@ border-radius: 6px;
 }
 .sys .sys-content .middle{
   width: 40%;
-  margin-left: 10%;
-  margin-top: 3%;
+  margin-left: 0%;
+  margin-top: -2%;
 }
 .sys .sys-content .middle .img{
 height: 400px;
@@ -166,6 +166,7 @@ border-radius: 6px;
 }
 .mva .mva-content .left{
   width: 20%;
+  margin-top: 5%;
 }
 .mva .mva-content .left .input[type=text] {
   width: 20%;
@@ -185,7 +186,7 @@ border-radius: 6px;
 }
 .mva .mva-content .right{
   width: 40%;
-  margin-top: -10%;
+  margin-top: -4%;
 }
 .mva .mva-content .right .img{
 height: 400px;
@@ -1091,7 +1092,7 @@ section{
   margin-top: 50%;
   margin-bottom: -50%;
   transform: translate(-50%, -50%);
-  width: 130%;
+  width: 133%;
 }
 
 .box1 select {
@@ -1145,7 +1146,7 @@ section{
   margin-bottom: 0%;
   margin-left: 40%;
   transform: translate(-50%, -50%);
-  width: 80%;
+  width: 100%;
 }
 
 .box2 select {
@@ -1199,7 +1200,7 @@ section{
   margin-bottom: 60%;
   margin-left: 40%;
   transform: translate(-50%, -50%);
-  width: 80%;
+  width: 100%;
 }
 
 .box3 select {
