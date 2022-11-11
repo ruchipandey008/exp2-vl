@@ -75,10 +75,10 @@ LTI systems have been useful in a number of applications including audio and spe
 $$ x[n] = \sin(\omega_0 n) + w[n]  $$
 
 where $w[n]$ is the noise component. Since the rate of fluctuations of the noise and signal components are different, this can be used to selectively reduce the noise. We demonstrate how this can be achieved using a simple moving average system. A moving average system simply computes an average of $M$ samples around the given point. As expected, this can reduce the rapid fluctuations in the noise component with relatively smaller impact on the slowly changing signal component. An $M$-length moving average system has impulse response given by 
-$$\textbf{h}[n] = u[n] = \left\{\begin{matrix}
+$$ \textbf{h}[n] = u[n] = \left\{\begin{matrix}
 1 \quad n\geq 0 \\ 
 0 \quad n<0
-\end{matrix}\right.$$
+\end{matrix}\right. $$
 
 When the input signal is $x[n]$, the output of this system is given by  
 
