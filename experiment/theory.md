@@ -55,7 +55,7 @@ $$\textbf{y}[n] = \textbf{x}[n] * \textbf{h}[n] = \sum_{-\infty}^{\infty} \textb
 ### Impulse response of some standard systems: ###
  * Delay: $\textbf{h}[n] = \delta [n - \Delta]$
  * Scaling:  $\textbf{h}[n] = \alpha \delta [n]$  
- * Differentiator: $ \textbf{h}[n] = \delta [n] - \delta [n-1] $   
+ * Differentiator: $\textbf{h}[n] = \delta [n] - \delta [n-1]$   
  * Accumulator: $\textbf{h}[n] = u[n] = \left\{\begin{matrix}
 1 \quad n\geq 0 \\ 
 0 \quad n<0
